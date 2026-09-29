@@ -6,9 +6,6 @@ const menuButton = document.getElementById("menuButton");
 const navLinks = document.getElementById("navLinks");
 const navItems = document.querySelectorAll(".nav-links a");
 
-
-// Open / close menu
-
 menuButton.addEventListener("click", function () {
 
     const menuIsOpen = navLinks.classList.toggle("active");
@@ -31,12 +28,38 @@ menuButton.addEventListener("click", function () {
 
 
 // =========================
-// CLOSE MENU WHEN LINK IS CLICKED
+// NAVIGATION SCROLL
 // =========================
 
 navItems.forEach(function (link) {
 
-    link.addEventListener("click", function () {
+    link.addEventListener("click", function (event) {
+
+        event.preventDefault();
+
+        const targetId = link.getAttribute("href");
+
+        const targetSection = document.querySelector(targetId);
+
+        if (targetSection) {
+
+            const navbarHeight =
+                document.querySelector(".navbar").offsetHeight;
+
+            const targetPosition =
+                targetSection.getBoundingClientRect().top +
+                window.scrollY -
+                navbarHeight;
+
+            window.scrollTo({
+                top: targetPosition,
+                behavior: "smooth"
+            });
+
+        }
+
+
+        // Close mobile menu
 
         navLinks.classList.remove("active");
 
@@ -85,7 +108,7 @@ document.addEventListener("keydown", function (event) {
 
 
 // =========================
-// CLOSE MENU WHEN SCREEN GETS LARGE
+// RESET MENU ON DESKTOP
 // =========================
 
 window.addEventListener("resize", function () {
@@ -131,10 +154,6 @@ window.addEventListener("scroll", function () {
 
 });
 
-
-// =========================
-// BACK TO TOP CLICK
-// =========================
 
 backToTop.addEventListener("click", function () {
 
